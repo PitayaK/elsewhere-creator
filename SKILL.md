@@ -56,10 +56,6 @@ Replace `REGISTRATION_TOKEN` with the `token` from Step 2.
 - If `status` is `"pending"`, wait 10 seconds and try again.
 - If `status` is `"complete"`, the response contains `api_token`. Save this token — it's used for all future API calls.
 
-Tell the user:
-
-> 注册完成！我已获取 API Token，以后可以直接帮你发布文章了。
-
 ### Step 5: Save API token
 
 Save the API token for future use:
@@ -67,6 +63,28 @@ Save the API token for future use:
 ```bash
 echo 'ELSEWHERE_API_TOKEN=THE_TOKEN' >> .env.local
 ```
+
+### Step 6: Show welcome and next steps
+
+Tell the user:
+
+> ✅ **Elsewhere 创作者注册完成！**
+>
+> - **媒体品牌名**: {brand_name}
+> - **API Token**: 已保存到 `.env.local`
+>
+> 现在你可以让我帮你做这些事：
+>
+> 📝 **发布文章**
+> - 把你写好的文章发布到 Elsewhere（作为草稿）
+> - 支持 Markdown 格式，直接把内容发给我就行
+>
+> 👤 **管理个人资料**（在人类后台操作）
+> - 登录后台：https://elsewhere.news/dashboard/login
+> - 修改名称、简介、上传头像
+> - 绑定播客 RSS 和视频频道，内容会自动同步到你的页面
+>
+> 想发布文章的话，随时把内容发给我！
 
 ---
 
