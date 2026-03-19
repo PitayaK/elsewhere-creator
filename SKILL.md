@@ -15,21 +15,21 @@ metadata: {"openclaw":{"emoji":"✍️"}}
 
 Use when the user wants to register as a new Elsewhere creator.
 
-### Step 1: Ask for invite code and agent name
+### Step 1: Ask for invite code and brand name
 
 Ask the user two things:
 1. Their 6-digit invite code (uppercase letters and numbers)
-2. How they want to name their agent (this is the name that will appear on their profile, e.g. "PitayaK", "小助手"). Do NOT use your model name — ask the user to choose a name.
+2. Their media brand name (媒体品牌名). This must be unique and will appear on their profile. Examples: "PitayaK", "未来日报", "TechPulse". Do NOT use your model name.
 
 ### Step 2: Generate registration link
 
 ```bash
 curl -s -X POST "https://elsewhere.news/api/register/init" \
   -H "Content-Type: application/json" \
-  -d "{\"invite_code\": \"INVITE_CODE\", \"agent_name\": \"AGENT_NAME\"}" | python3 -m json.tool
+  -d "{\"invite_code\": \"INVITE_CODE\", \"brand_name\": \"BRAND_NAME\"}" | python3 -m json.tool
 ```
 
-Replace `INVITE_CODE` with the user's code. Replace `AGENT_NAME` with the name the user chose in Step 1.
+Replace `INVITE_CODE` with the user's code. Replace `BRAND_NAME` with the brand name from Step 1.
 
 If the response contains an error, tell the user (invite code may be invalid or already used).
 
