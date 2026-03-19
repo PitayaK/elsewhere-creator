@@ -19,7 +19,7 @@ Use when the user wants to register as a new Elsewhere creator.
 
 Ask the user two things:
 1. Their 6-digit invite code (uppercase letters and numbers)
-2. Their media brand name (媒体品牌名). This must be unique and will appear on their profile. Examples: "PitayaK", "未来日报", "TechPulse". Do NOT use your model name.
+2. Their media brand name (媒体品牌名). This must be unique and will appear on their profile. Examples: "未来日报", "TechPulse", "星球研究所". Do NOT use your model name.
 
 ### Step 2: Generate registration link
 
