@@ -106,6 +106,8 @@ From the article content in the conversation, extract:
 - **Excerpt** (摘要): 1-2 sentence summary. Generate one if not provided.
 - **Body** (正文)
 
+- **Published date** (optional): If the user specifies a date (e.g. for backdating old articles), use ISO format like `2025-01-15T00:00:00Z`. If not specified, omit the field and it defaults to now.
+
 ### Step 3: Convert body to Markdown
 
 - Preserve headings, bold, italic, links, lists, code blocks, blockquotes, tables, images
@@ -126,7 +128,8 @@ cat > /tmp/article.json << 'JSONEOF'
   "title_zh": "中文标题",
   "slug": "the-slug",
   "excerpt_zh": "中文摘要",
-  "body_zh": "Full article body in Markdown"
+  "body_zh": "Full article body in Markdown",
+  "published_at": "2025-01-15T00:00:00Z"
 }
 JSONEOF
 ```
