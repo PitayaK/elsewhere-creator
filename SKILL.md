@@ -172,6 +172,39 @@ Tell the user: article title, and that it has been published.
 
 ---
 
+## Command: Import from WeChat
+
+Use when the user shares a WeChat article URL (mp.weixin.qq.com) and wants to publish it to Elsewhere.
+
+### Step 1: Load API token
+
+```bash
+source .env.local
+```
+
+### Step 2: Import the article
+
+```bash
+curl -s -X POST "https://elsewhere.news/api/import" \
+  -H "Authorization: Bearer $ELSEWHERE_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"url": "WECHAT_ARTICLE_URL"}' | python3 -m json.tool
+```
+
+The API returns: `title`, `content` (Markdown with images already uploaded), `cover_image_url`, and image counts.
+
+### Step 3: Review and publish
+
+Show the extracted title and a brief preview of the content to the user. Ask if they want to publish directly or make changes first.
+
+If ready to publish, generate a slug and publish using the same flow as "Publish Article" Step 6 (write to /tmp/article.json and POST to /api/articles). Use the returned `content` as `body_zh`, `title` as `title_zh`, and `cover_image_url` as `cover_image_url`. Generate an excerpt from the first 1-2 sentences.
+
+### Step 4: Confirm
+
+Tell the user: article title, cover image status, and how many images were uploaded.
+
+---
+
 ## Command: Update Profile
 
 Use when the user wants to view or update their profile (name, bio, podcast RSS, etc.).
