@@ -18,7 +18,7 @@ metadata: {"openclaw":{"emoji":"✍️"}}
 > curl -s https://raw.githubusercontent.com/PitayaK/elsewhere-creator/main/SKILL.md
 > ```
 
-**当前版本：v1.8**
+**当前版本：v1.9**
 
 ---
 
@@ -183,7 +183,7 @@ curl -s -X POST "https://elsewhere.news/api/articles" \
 
 ### Step 7: Confirm
 
-Tell the user: article title, and that it has been published.
+One line only: `✅ 《标题》已发布 — https://elsewhere.news/zh/articles/slug`
 
 ---
 
@@ -255,10 +255,6 @@ The import API already converts large-font-size elements to `##` / `###` automat
 - Change, rewrite, summarize, or remove any text content
 - Change the order of paragraphs or images
 - Add any new content that wasn't in the original
-
-Show the user the extracted title and a brief preview. Ask if they want to publish directly or make changes first.
-
-If ready to publish:
 
 **Step 3a: Translate title and excerpt yourself**
 
@@ -334,7 +330,9 @@ Only do this if `failed_images` is present and non-empty. Skip images that still
 
 ### Step 4: Confirm
 
-Tell the user: article title, published date, cover image status, and how many images were embedded.
+One line only: `✅ 《标题》已发布 — https://elsewhere.news/zh/articles/slug`
+
+Only add extra info if something went wrong (e.g., some images failed to upload).
 
 ---
 
@@ -491,6 +489,7 @@ Note: Avatar upload is only available in the GUI dashboard (https://elsewhere.ne
 
 ## Important Notes
 
+- **Keep communication minimal.** During import/publish, don't narrate each step. Only speak up for errors or the final one-line result. No summaries, no "I'm now doing X", no rephrasing what the API returned.
 - Registration links expire in 24 hours; each invite code is single-use
 - Articles are published directly (no draft step)
 - Always include `title_en` and `excerpt_en` (translate yourself). Never include `body_en` — body translation is handled automatically after publishing
