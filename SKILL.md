@@ -18,7 +18,7 @@ metadata: {"openclaw":{"emoji":"✍️"}}
 > curl -s https://raw.githubusercontent.com/PitayaK/elsewhere-creator/main/SKILL.md
 > ```
 
-**当前版本：v2.0**
+**当前版本：v2.1**
 
 ---
 
@@ -297,6 +297,13 @@ curl -s -X POST "https://elsewhere.news/api/articles" \
   -H "Authorization: Bearer $ELSEWHERE_API_TOKEN" \
   -H "Content-Type: application/json" \
   -d @/tmp/article.json | python3 -m json.tool
+```
+
+**To overwrite an existing article** (re-importing to fix errors), add `"overwrite": true` to the JSON. The API will update the existing article with the same slug instead of creating a new one:
+
+```bash
+# In the article JSON, add overwrite flag:
+# "overwrite": true
 ```
 
 **CRITICAL**: Always use the `content` field from the import API directly as `body_zh`. Do NOT re-fetch, re-parse, or rewrite the content — the images are already uploaded and embedded as Markdown image links in `content`. Rewriting it will break all images.
