@@ -191,13 +191,13 @@ curl -s -X POST "https://elsewhere.news/api/import" \
   -d '{"url": "WECHAT_ARTICLE_URL"}' | python3 -m json.tool
 ```
 
-The API returns: `title`, `content` (Markdown with images already uploaded), `cover_image_url`, and image counts.
+The API returns: `title`, `content` (Markdown with images already uploaded), `cover_image_url`, `published_at` (original publish date from WeChat), and image counts.
 
 ### Step 3: Review and publish
 
 Show the extracted title and a brief preview of the content to the user. Ask if they want to publish directly or make changes first.
 
-If ready to publish, generate a slug and publish using the same flow as "Publish Article" Step 6 (write to /tmp/article.json and POST to /api/articles). Use the returned `content` as `body_zh`, `title` as `title_zh`, and `cover_image_url` as `cover_image_url`. Generate an excerpt from the first 1-2 sentences.
+If ready to publish, generate a slug and publish using the same flow as "Publish Article" Step 6 (write to /tmp/article.json and POST to /api/articles). Use the returned `content` as `body_zh`, `title` as `title_zh`, `cover_image_url` as `cover_image_url`, and `published_at` as `published_at`. Generate an excerpt from the first 1-2 sentences.
 
 ### Step 4: Confirm
 
