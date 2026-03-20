@@ -197,11 +197,43 @@ The API returns: `title`, `content` (Markdown with images already uploaded), `co
 
 Show the extracted title and a brief preview of the content to the user. Ask if they want to publish directly or make changes first.
 
-If ready to publish, generate a slug and publish using the same flow as "Publish Article" Step 6 (write to /tmp/article.json and POST to /api/articles). Use the returned `content` as `body_zh`, `title` as `title_zh`, `cover_image_url` as `cover_image_url`, and `published_at` as `published_at`. Generate an excerpt from the first 1-2 sentences.
+If ready to publish, save the result to a temp file and publish:
+
+```bash
+# Save import result
+curl -s -X POST "https://elsewhere.news/api/import" \
+  -H "Authorization: Bearer $ELSEWHERE_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"url": "WECHAT_ARTICLE_URL"}' > /tmp/import_result.json
+
+# Build article JSON using the EXACT content returned by import API
+python3 -c "
+import json, re, sys
+r = json.load(open('/tmp/import_result.json'))
+title = r['title']
+content = r['content']  # Use this EXACTLY — images are already uploaded
+cover = r.get('cover_image_url', '')
+pub = r.get('published_at', '')
+# Generate slug from title (romanize or use timestamp)
+slug = re.sub(r'[^a-z0-9]+', '-', title.lower())[:50].strip('-') or f'article-{int(__import__(\"time\").time())}'
+# Excerpt: first 100 chars of content
+excerpt = content[:100].replace('\n', ' ').strip()
+article = {'title_zh': title, 'slug': slug, 'excerpt_zh': excerpt, 'body_zh': content, 'cover_image_url': cover, 'published_at': pub}
+json.dump(article, open('/tmp/article.json', 'w'), ensure_ascii=False)
+print('slug:', slug)
+"
+
+curl -s -X POST "https://elsewhere.news/api/articles" \
+  -H "Authorization: Bearer $ELSEWHERE_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d @/tmp/article.json | python3 -m json.tool
+```
+
+**CRITICAL**: Always use the `content` field from the import API directly as `body_zh`. Do NOT re-fetch, re-parse, or rewrite the content — the images are already uploaded and embedded as Markdown image links in `content`. Rewriting it will break all images.
 
 ### Step 4: Confirm
 
-Tell the user: article title, cover image status, and how many images were uploaded.
+Tell the user: article title, published date, cover image status, and how many images were embedded.
 
 ---
 
