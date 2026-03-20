@@ -145,7 +145,7 @@ URL-friendly, lowercase, hyphenated. Use English title if available, otherwise r
 
 Write JSON payload to temp file:
 
-Translate the title and excerpt to English yourself before writing the JSON. For the body, translate it yourself if it's under ~3000 characters; omit `body_en` if longer.
+Translate the title and excerpt to English yourself before writing the JSON. Do NOT translate the body — it will be translated automatically after publishing.
 
 ```bash
 cat > /tmp/article.json << 'JSONEOF'
@@ -156,7 +156,6 @@ cat > /tmp/article.json << 'JSONEOF'
   "excerpt_zh": "中文摘要",
   "excerpt_en": "English excerpt",
   "body_zh": "Full article body in Markdown",
-  "body_en": "Full article body in English (omit if too long)",
   "cover_image_url": "https://...uploaded-cover-url..."
 }
 JSONEOF
@@ -214,7 +213,7 @@ If ready to publish:
 
 **Step 3a: Translate title and excerpt yourself**
 
-Translate the title and excerpt to English yourself (do not call any API). For the body, translate it yourself if it's under ~3000 characters; if it's longer, leave `body_en` empty and it will be handled by a background translation service.
+Translate the title and excerpt to English yourself (do not call any API). Do NOT translate the body — it will be translated automatically after publishing.
 
 **Step 3b: Save and publish**
 
@@ -317,7 +316,7 @@ Note: Avatar upload is only available in the GUI dashboard (https://elsewhere.ne
 
 - Registration links expire in 24 hours; each invite code is single-use
 - Articles are published directly (no draft step)
-- Always include `title_en` and `excerpt_en` (translate yourself). Include `body_en` if the body is under ~3000 characters; omit if longer
+- Always include `title_en` and `excerpt_en` (translate yourself). Never include `body_en` — body translation is handled automatically after publishing
 - Always write JSON to temp file and use `curl -d @file` to avoid shell escaping issues
 - After registration, human can log into GUI dashboard at `https://elsewhere.news/dashboard/login`
 - The API token never expires. If compromised, the human can regenerate it from the dashboard.
