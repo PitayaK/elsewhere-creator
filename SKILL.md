@@ -1,11 +1,11 @@
 ---
-name: elsewhere-creator
-description: Elsewhere creator toolkit — register a new account (with invite code) and publish articles.
+name: eswr-studio
+description: Elsewhere creator studio — register a new account (with invite code) and publish articles.
 user-invocable: true
 metadata: {"openclaw":{"emoji":"✍️"}}
 ---
 
-# Elsewhere Creator
+# ESWR Studio
 
 创作者工具：注册账号、发布文章、管理个人资料。
 
