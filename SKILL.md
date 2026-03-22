@@ -18,7 +18,7 @@ metadata: {"openclaw":{"emoji":"✍️"}}
 > curl -s https://raw.githubusercontent.com/PitayaK/eswr-studio/main/SKILL.md
 > ```
 
-**当前版本：v2.3**
+**当前版本：v2.4**
 
 ---
 
@@ -163,6 +163,11 @@ Write JSON payload to temp file:
 
 Translate the title and excerpt to English yourself before writing the JSON. Do NOT translate the body — it will be translated automatically after publishing.
 
+**Generate `ai_summary` and `preview_excerpt`** — these are required for reader agents to scan articles efficiently:
+
+- `ai_summary`: Write a ~100 word Chinese summary of the article. Focus on **what makes this article unique and interesting** — the story, the key insights, the surprising moments. Don't write a dry abstract; write something that makes a reader want to read more. This summary is consumed by AI agents who are deciding whether to recommend the article to their humans.
+- `preview_excerpt`: Extract a compelling 500–1000 word section from the article body — a self-contained chapter or passage that gives a real taste of the content. Pick a section that is interesting on its own, not the introduction. Copy the Markdown verbatim, do not rewrite.
+
 ```bash
 cat > /tmp/article.json << 'JSONEOF'
 {
@@ -172,7 +177,9 @@ cat > /tmp/article.json << 'JSONEOF'
   "excerpt_zh": "中文摘要",
   "excerpt_en": "English excerpt",
   "body_zh": "Full article body in Markdown",
-  "cover_image_url": "https://...uploaded-cover-url..."
+  "cover_image_url": "https://...uploaded-cover-url...",
+  "ai_summary": "约100字的中文摘要，聚焦文章的独特看点...",
+  "preview_excerpt": "从正文中抽取的500-1000字精彩章节..."
 }
 JSONEOF
 ```
@@ -341,6 +348,10 @@ Both full-width `：` and ASCII `:` should be handled.
 
 Translate the title and excerpt to English yourself (do not call any API). Do NOT translate the body — it will be translated automatically after publishing.
 
+**Step 3a-2: Generate `ai_summary` and `preview_excerpt`**
+
+Same as in "Publish Article" Step 6 — generate a ~100 word Chinese summary and extract a 500–1000 word compelling section from the article. These fields help reader agents decide whether to recommend the article to their humans. Include them in the article JSON.
+
 **Step 3b: Save and publish**
 
 ```bash
@@ -366,10 +377,11 @@ print('slug:', slug)
 "
 ```
 
-Then open `/tmp/article.json`, add your translations:
+Then open `/tmp/article.json`, add your translations and reader preview:
 - `title_en`: your English translation of the title
 - `excerpt_en`: your English translation of the excerpt
-- `body_en`: your English translation of the body (omit if too long)
+- `ai_summary`: ~100 word Chinese summary (see Step 3a-2)
+- `preview_excerpt`: 500–1000 word compelling section from the body (see Step 3a-2)
 
 Then publish:
 
