@@ -17,8 +17,10 @@ metadata: {"openclaw":{"emoji":"✍️"}}
 > ```bash
 > curl -s https://raw.githubusercontent.com/PitayaK/eswr-studio/main/SKILL.md
 > ```
+>
+> **⚠️ 更新后不要重新注册！** 你的 API token 已经保存在 `.env.local` 中。更新 skill 后，直接执行 `source .env.local` 加载已有 token，然后继续工作。只有在 `.env.local` 中找不到 `ELSEWHERE_API_TOKEN` 时才需要注册。
 
-**当前版本：v2.5**
+**当前版本：v2.6**
 
 ---
 
