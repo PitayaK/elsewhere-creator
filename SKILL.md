@@ -1,6 +1,6 @@
 ---
 name: eswr-studio
-version: 2.8.0
+version: 2.9.0
 description: Elsewhere creator studio — register a new account (with invite code) and publish articles.
 user-invocable: true
 metadata: {"openclaw":{"emoji":"✍️"}}
@@ -18,14 +18,32 @@ metadata: {"openclaw":{"emoji":"✍️"}}
 > ```bash
 > curl -s https://raw.githubusercontent.com/PitayaK/eswr-studio/main/SKILL.md
 > ```
->
-> **⚠️ 更新后不要重新注册！** 你的 API token 应该在 `.env.local` 或你的长期记忆中。更新 skill 后，先执行 `source .env.local`，如果文件不存在则从你的长期记忆中获取 token。**绝对不要因为 skill 更新了就重新注册** — 只有从未注册过的新用户才需要注册。
 
-**当前版本：v2.8**
+**当前版本：v2.9**
+
+---
+
+## ⚠️ Step 0: Token Check（每次操作前必须执行）
+
+**在执行任何 Command 之前，必须先完成以下检查。没有 token 就不能发布、不能改资料 — 但这不意味着需要重新注册。**
+
+按以下顺序查找 API token，找到即停：
+
+1. **检查环境变量**：如果当前 shell 已有 `$ELSEWHERE_API_TOKEN`，直接使用
+2. **检查 `.env.local`**：
+   ```bash
+   cat .env.local 2>/dev/null | grep ELSEWHERE_API_TOKEN
+   ```
+3. **检查长期记忆**：搜索你的持久化记忆/笔记中是否存有 Elsewhere API token
+4. **询问人类**：告诉人类"我找不到你的 Elsewhere API token，你能提供一下吗？可以在 https://elsewhere.news/dashboard/login 登录后台查看。"
+
+**只有以上 4 步全部失败，才进入 Register 流程。绝对不要因为 skill 更新了就重新注册 — 已注册用户的 token 永远有效。**
 
 ---
 
 ## Command: Register
+
+> **只有在 Step 0 的 4 步检查全部失败后，才执行此流程。** 如果你能找到 token，人类就已经注册过了，不需要再注册。
 
 Use when the user wants to register as a new Elsewhere creator.
 
@@ -116,11 +134,7 @@ Use when the user wants to publish an article.
 
 ### Step 1: Load API token
 
-The `ELSEWHERE_API_TOKEN` should be in `.env.local` (saved during registration). If `.env.local` doesn't exist or doesn't contain the token, check your long-term memory for it. Only ask the user as a last resort.
-
-```bash
-source .env.local
-```
+执行上方 Step 0 获取 `$ELSEWHERE_API_TOKEN`。如果找不到，**不要跳到注册**，先问人类要。
 
 ### Step 2: Parse the article content
 
@@ -213,9 +227,7 @@ Use when the user shares a WeChat article URL (mp.weixin.qq.com) and wants to pu
 
 ### Step 1: Load API token
 
-```bash
-source .env.local
-```
+执行上方 Step 0 获取 `$ELSEWHERE_API_TOKEN`。
 
 ### Step 2: Import the article
 
@@ -461,9 +473,7 @@ Use when the user shares **multiple** WeChat article URLs and wants to publish t
 
 ### Step 1: Load API token
 
-```bash
-source .env.local
-```
+执行上方 Step 0 获取 `$ELSEWHERE_API_TOKEN`。
 
 ### Step 2: Collect all URLs
 
@@ -589,9 +599,7 @@ Use when the user wants to view or update their profile (name, bio, podcast RSS,
 
 ### Step 1: Load API token
 
-```bash
-source .env.local
-```
+执行上方 Step 0 获取 `$ELSEWHERE_API_TOKEN`。
 
 ### Step 2: View current profile (optional)
 
